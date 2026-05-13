@@ -1,11 +1,10 @@
 import requests
-import json
+from server import *
 
 def createTask(LIST_ID: int, TOKEN: str, userID: int, task: str, priority: int, desc: str = "."):
-    with open('members.json', 'r') as file:
-        members = json.load(file)
+    member = getMember(userID)
 
-    if str(userID) not in members:
+    if not member:
         return 401
 
     task_data = {
@@ -13,7 +12,7 @@ def createTask(LIST_ID: int, TOKEN: str, userID: int, task: str, priority: int, 
         "description": str(desc),
         "priority": int(priority),
         "status": "to do",
-        "assignees": [int(members[str(userID)])]
+        "assignees": [int(member["clickup_id"])]
     }
 
     url = f"https://api.clickup.com/api/v2/list/{LIST_ID}/task"
@@ -42,22 +41,22 @@ def validateClickUp(TEAM_ID: int, TOKEN: str, userID: int):
                 return True     
         return False
 
-def getTasks(LIST_ID: int, TOKEN: str, id: int):
-    url = f"https://api.clickup.com/api/v2/list/{LIST_ID}/task"
+# def getTasks(LIST_ID: int, TOKEN: str, id: int):
+#     url = f"https://api.clickup.com/api/v2/list/{LIST_ID}/task"
 
-    headers = {
-        "Authorization": TOKEN
-    }
+#     headers = {
+#         "Authorization": TOKEN
+#     }
 
-    params = {
-        "assignees[]": id
-    }
+#     params = {
+#         "assignees[]": id
+#     }
 
-    response = requests.get(url, headers=headers, params=params)
-    data = response.json()
-    if response.status_code != 200:
-        print(data)
-        return
+#     response = requests.get(url, headers=headers, params=params)
+#     data = response.json()
+#     if response.status_code != 200:
+#         print(data)
+#         return
     
-    tasks = data["tasks"]
-    return tasks
+#     tasks = data["tasks"]
+#     return tasks
