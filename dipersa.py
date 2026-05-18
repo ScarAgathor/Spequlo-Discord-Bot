@@ -187,23 +187,3 @@ async def assign(interaction: discord.Interaction, user: discord.Member, task: s
     await interaction.response.send_message(embed=embed)
 
 bot.run(DISCORD_TOKEN, log_handler=handler, log_level=logging.DEBUG)
-
-CLICKUP_LISTS = {
-    "mobile_backlog": "123",
-    "mobile_sprint": "456",
-    "mobile_bugs": "789",
-
-    "integration_backlog": "111",
-    "integration_sprint": "222",
-    "integration_bugs": "333",
-
-    "tools_backlog": "444",
-    "tools_sprint": "555",
-    "tools_bugs": "666",
-
-    "infrastructure_backlog": "777",
-    "infrastructure_sprint": "888",
-    "infrastructure_bugs": "999",
-
-    "website": "101010"
-}
